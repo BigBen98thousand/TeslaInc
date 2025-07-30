@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Tesla Ink | Premium Tesla Dealership</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --tesla-red: #e31937;
+            --dark-bg: #171a20;
+            --light-bg: #f4f4f4;
+            --text-dark: #393c41;
+            --text-light: #ffffff;
+            --accent: #5c5d61;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            background-color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(23, 26, 32, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--tesla-red);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--tesla-red);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--tesla-red);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-light);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .about-hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(23, 26, 32, 0.5)), url('tesla1.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+
+        .about-hero h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin-bottom: 40px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--tesla-red);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--tesla-red);
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--text-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-light);
+            margin-left: 20px;
+            border: 2px solid var(--text-light);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--tesla-red);
+            border-color: var(--tesla-red);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dark-bg);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--tesla-red);
+        }
+
+        /* Mission and Vision */
+        .mission-vision {
+            background-color: rgb(56, 56, 56);
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-vision::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('tesla1.jpg') no-repeat center center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .mv-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mv-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mv-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mv-card i {
+            font-size: 3.5rem;
+            color: var(--tesla-red);
+            margin-bottom: 25px;
+        }
+
+        .mv-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .mv-card p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* Objectives Section */
+        .objectives {
+            background-color:black;
+            position: relative;
+        }
+
+        .objectives-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .objective-card {
+            background-color:  white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--tesla-red);
+        }
+
+        .objective-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .objective-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-bg);
+        }
+
+        .objective-card p {
+            line-height: 1.7;
+            color: var(--accent);
+        }
+
+        /* Partnership Section */
+        .partnership {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partnership::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1611159063981-b8c8c4301869?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .partnership-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+
+        .partnership-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .partnership-info p {
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+        }
+
+        .benefit i {
+            color: var(--tesla-red);
+            font-size: 1.5rem;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .partnership-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Leadership Section */
+        .leadership {
+            background-color: #fff;
+        }
+
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .team-member {
+            text-align: center;
+            background: var(--light-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-img {
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .team-member:hover .member-img img {
+            transform: scale(1.1);
+        }
+
+        .member-info {
+            padding: 25px;
+        }
+
+        .member-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .member-info p {
+            color: var(--tesla-red);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .member-info .social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .member-info .social a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: var(--dark-bg);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .member-info .social a:hover {
+            background: var(--tesla-red);
+            transform: translateY(-5px);
+        }
+
+        /* Timeline Section */
+        .timeline {
+            background-color: var(--light-bg);
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: var(--tesla-red);
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            padding-right: calc(50% + 30px);
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: calc(50% + 30px);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--tesla-red);
+            left: 50%;
+            margin-left: -10px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--tesla-red);
+        }
+
+        .timeline-content p {
+            line-height: 1.7;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 60px 40px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--tesla-red);
+        }
+
+        .footer-col p {
+            margin: 15px 0;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--tesla-red);
+            transform: translateY(-5px);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--tesla-red);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .partnership-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-container::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                padding-left: 70px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--dark-bg);
+                transition: all 0.4s ease;
+                padding: 80px 30px 30px;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 0 0 20px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            .about-hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .about-hero p {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+            }
+            
+            section {
+                padding: 80px 20px;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .about-hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .mv-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>TESLA <span>Inc</span></h1>
+        </div>
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="fleet.html">Fleet</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                   <li><a href="job.html">Work with Us</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <h1>DRIVING THE FUTURE</h1>
+        <p>Discover our mission to accelerate the world's transition to sustainable energy</p>
+        <div>
+            <a href="#mission" class="btn">Our Mission</a>
+            
+            
+        </div>
+    </section>
+
+    <!-- Mission & Vision Section -->
+    <section class="mission-vision" id="mission">
+        <div class="section-title">
+            <h2 style="color: white;">Our Mission & Vision</h2>
+        </div>
+        <div class="mv-container">
+            <div class="mv-card">
+                <i class="fas fa-bullseye"></i>
+                <h3>Our Mission</h3>
+                <p>To accelerate the world's transition to sustainable energy by providing exceptional Tesla ownership experiences, premium service, and making electric mobility accessible to all.</p>
+                <p>We believe that driving electric should be effortless, exciting, and available to everyone who shares our vision for a cleaner future.</p>
+            </div>
+            <div class="mv-card">
+                <i class="fas fa-eye"></i>
+                <h3>Our Vision</h3>
+                <p>To become the world's most trusted premium electric vehicle provider, setting new standards for customer experience while leading the charge toward carbon-neutral transportation.</p>
+                <p>We envision a future where every vehicle on the road is electric, and our dealerships serve as community hubs for sustainable innovation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objectives Section -->
+    <section class="objectives">
+        <div class="section-title">
+            <h2 style="color: white;">Our Goals & Objectives</h2>
+        </div>
+        <div class="objectives-container">
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>Electrification</h3>
+                    <p>Transition 50,000 drivers to electric vehicles by 2030 through accessible financing, education, and exceptional service.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Sustainability</h3>
+                    <p>Power all dealership locations with 100% renewable energy and achieve carbon neutrality by 2026.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Customer Experience</h3>
+                    <p>Maintain a 98% customer satisfaction rating and become the highest-rated EV dealership in North America.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Community Impact</h3>
+                    <p>Install 500 public charging stations in underserved communities by 2027 to support EV adoption.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Innovation</h3>
+                    <p>Develop proprietary technology to enhance the EV ownership experience through AI-powered service solutions.</p>
+                </div>
+                <div class="objective-card">
+                    <h3>Growth</h3>
+                    <p>Expand to 50 premium locations across North America and Europe by 2028 while maintaining our core values.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Section -->
+    <section class="partnership" id="partnership">
+        <div class="section-title">
+            <h2 style="color: white;">Join Our Journey</h2>
+        </div>
+        <div class="partnership-container">
+            <div class="partnership-info">
+                <h2>Become an Investor or Partner</h2>
+                <p>Tesla Ink is expanding rapidly and seeking strategic partners and investors who share our vision for a sustainable future. Join us in revolutionizing the electric vehicle experience.</p>
+                <p>As a partner, you'll gain access to our proven business model, exclusive technology, and the fastest-growing segment in the automotive industry.</p>
+                
+                <div class="benefits-grid">
+                    <div class="benefit">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h4>High Growth Potential</h4>
+                            <p>Position in the rapidly expanding EV market</p>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h4>Exclusive Territory</h4>
+                            <p>Protected market area with first-mover advantage</p>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-cogs"></i>
+                        <div>
+                            <h4>Comprehensive Support</h4>
+                            <p>Training, marketing, and operational assistance</p>
+                        </div>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-bolt"></i>
+                        <div>
+                            <h4>Cutting-Edge Technology</h4>
+                            <p>Access to proprietary sales and service platforms</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="partnership-form">
+                <h3>Partnership Inquiry</h3>
+                <form id="partner-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">Interest Type</label>
+                        <select id="interest" name="interest" required>
+                            <option value="">Select interest</option>
+                            <option value="investor">Investor</option>
+                            <option value="dealer">Dealership Partner</option>
+                            <option value="corporate">Corporate Partnership</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your interest and background..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <
+    <!-- Timeline Section -->
+    <section class="timeline">
+        <div class="section-title">
+            <h2>Our Journey</h2>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                   <h3>2008 – Tesla Inc Releases Its First Electric Car,</h3>
+<p>Tesla Motors (founded in 2003 by Martin Eberhard and Marc Tarpenning, with Elon Musk joining as an early investor and later CEO) released its first production vehicle, the Tesla Roadster, in 2008. It was the first highway-legal electric vehicle to use lithium-ion battery cells and could travel over 200 miles on a single charge—an industry breakthrough at the time.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>2012 - Expansion</h3>
+                    <p>2012 – Launch of the Tesla Model S, Disrupting the Auto Industry
+In June 2012, Tesla launched the Model S, its first fully in-house designed and produced car. It won Motor Trend’s 2013 Car of the Year and redefined the EV market with its long range, over-the-air software updates, and performance. Tesla also began building its Supercharger network this year to support long-distance EV travel.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>2022 - Innovation,Energy</h3>
+                    <p>2015 – Tesla Powerwall Launches, Expanding into Energy Storage
+Tesla introduced the Powerwall and Powerpack energy storage systems in 2015, marking its entry into the clean energy market. The goal was to allow homes and businesses to store solar energy and reduce reliance on the grid—this was followed by the acquisition of SolarCity in 2016.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>2020 - Global Presence</h3>
+                    <p>2020 – Tesla Becomes the World’s Most Valuable Automaker
+In July 2020, Tesla’s market capitalization surpassed Toyota’s, making it the most valuable carmaker in the world. In the same year, Tesla achieved its first full year of profitability, delivered nearly 500,000 vehicles, and was added to the S&P 500 index in December.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>2023 - Future Vision</h3>
+                    <p>2023 – Global Expansion and Record Deliveries
+By 2023, Tesla had opened multiple Gigafactories across the U.S., China, and Europe (notably Giga Shanghai, Giga Berlin, and Giga Texas). It delivered 1.8 million vehicles that year, led the global EV market, and continued to develop its Full Self-Driving (FSD) technology, pushing the boundaries of autonomous driving.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Tesla Inc</h3>
+                <p>Premium Tesla dealership committed to accelerating the world's transition to sustainable energy through exceptional customer experiences.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/TeslaNAmerpica/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.twitter.com//tesla_na/"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/teslamotors/"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Showrooms</h3>
+                <ul>
+                    <li><a href="#">New York</a></li>
+                    <li><a href="#">Los Angeles</a></li>
+                    <li><a href="#">Miami</a></li>
+                    <li><a href="#">Chicago</a></li>
+                    <li><a href="#">Dallas</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="fleet.html">Fleet</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="jobs.html">Work with Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+<p><i class="fas fa-map-marker-alt"></i> 1 Tesla road,Austin,Texas 78725,USA</p>
+                <p><i class="fas fa-phone"></i> +1 (800) TES-LAIN</p>
+                <p><i class="fas fa-envelope"></i> Teslaincfoundation@outlook.com</p>
+                <p><i class="fas fa-clock"></i> Mon-Sat: 9AM - 8PM</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Tesla Inc. All rights reserved. Tesla and related marks are trademarks of Tesla, Inc.</p>
+        </div>
+    </footer>
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+        
+        hamburger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+        
+        // Form Submission
+        document.getElementById('partner-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your partnership inquiry! Our team will contact you shortly.');
+            this.reset();
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 40px';
+                header.style.background = 'rgba(23, 26, 32, 0.95)';
+            } else {
+                header.style.padding = '20px 40px';
+                header.style.background = 'rgba(23, 26, 32, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>

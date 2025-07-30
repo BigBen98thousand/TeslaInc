@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesla Fleet | Tesla Ink Premium Dealership</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Stripe Payment Integration -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --tesla-red: #e31937;
+            --dark-bg: #171a20;
+            --light-bg: #f4f4f4;
+            --text-dark: #393c41;
+            --text-light: #ffffff;
+            --accent: #5c5d61;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: black;
+            background-color: black;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .logo span {
+            color: var(--tesla-red);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--tesla-red);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--tesla-red);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-light);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Fleet Hero Section */
+        .fleet-hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(48, 47, 47, 0.5)), url('tesla.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            padding: 0 20px;
+        }
+
+        .fleet-hero h2 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .fleet-hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--tesla-red);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--tesla-red);
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--text-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-light);
+            margin-left: 20px;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--tesla-red);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: white;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--tesla-red);
+        }
+
+        /* Fleet Filter */
+        .fleet-filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--tesla-red);
+            border: 2px solid var(--tesla-red);
+            color: white;
+            padding: 10px 25px;
+            margin: 0 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--tesla-red);
+            color: white;
+        }
+
+        /* Fleet Grid */
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .fleet-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .fleet-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .model-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--tesla-red);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 10;
+        }
+
+        .fleet-img {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .fleet-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .fleet-card:hover .fleet-img img {
+            transform: scale(1.1);
+        }
+
+        .fleet-info {
+            padding: 25px;
+        }
+
+        .fleet-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .fleet-info .price {
+            font-size: 1.4rem;
+            color: var(--tesla-red);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .fleet-info p {
+            color: var(--accent);
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+
+        .fleet-specs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .spec {
+            text-align: center;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .spec .value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--dark-bg);
+        }
+
+        .spec .label {
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        .fleet-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Order Form Section */
+        .order {
+            background-color: var(--light-bg);
+        }
+
+        .order-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .order-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .order-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .order-info p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .order-form {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        /* Payment Form */
+        .payment-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border: 1px solid #eee;
+        }
+
+        #card-element {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 30px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            background-color: #128C7E;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 60px 40px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--tesla-red);
+        }
+
+        .footer-col p {
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--tesla-red);
+            transform: translateY(-5px);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--tesla-red);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .order-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .fleet-hero h2 {
+                font-size: 3rem;
+            }
+            
+            .fleet-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: var(--dark-bg);
+                transition: all 0.4s ease;
+                padding: 80px 30px 30px;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 0 0 20px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+            }
+            
+            .fleet-hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .fleet-hero p {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 12px 30px;
+            }
+            
+            section {
+                padding: 80px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .fleet-hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .fleet-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .fleet-actions .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>TESLA <span>Inc</span></h1>
+        </div>
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="fleet.html" class="active">Fleet</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                   <li><a href="job.html">Work with Us</a></li> 
+                   
+            </ul>
+        </nav>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Fleet Hero Section -->
+    <section class="fleet-hero">
+        <h2>PREMIUM TESLA FLEET</h2>
+        <p>Discover the complete lineup of Tesla's revolutionary electric vehicles</p>
+        <a href="#order" class="btn">Order Your Tesla</a>
+    </section>
+
+    <!-- Fleet Section -->
+    <section class="fleet" id="fleet">
+        <div class="section-title">
+            <h2>Our Tesla Models</h2>
+        </div>
+        
+        <div class="fleet-filter">
+            <button class="filter-btn active" data-filter="all">All Models</button>
+            <button class="filter-btn" data-filter="sedan">Sedans</button>
+            <button class="filter-btn" data-filter="truck">Trucks</button>
+            
+        
+        </div>
+        
+        <div class="fleet-grid">
+            <!-- Model S -->
+            <div class="fleet-card" data-category="sedan">
+                <div class="model-badge">Premium Sedan</div>
+                <div class="fleet-img">
+                    <img src="tesla.jpg" alt="Model S">
+                </div>
+                <div class="fleet-info">
+                    <h3>Model S</h3>
+                    <div class="price">From $89,990</div>
+                    <p>The quickest car in production with record-setting performance and range.</p>
+                    
+                    <div class="fleet-actions">
+                        <button class="btn" data-model="Model S">Order Now</button>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Model 3 -->
+            <div class="fleet-card" data-category="sedan">
+                <div class="model-badge">Best Seller</div>
+                <div class="fleet-img">
+                    <img src="tesla2.jpg" alt="Model 3">
+                </div>
+                <div class="fleet-info">
+                    <h3>Model 3</h3>
+                    <div class="price">From $42,990</div>
+                    <p>Electric for everyone with premium interior and impressive range.</p>
+                    
+                    <div class="fleet-actions">
+                        <button class="btn" data-model="Model 3">Order Now</button>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Model X -->
+            <div class="fleet-card" data-category="suv">
+                <div class="model-badge">Premium SUV</div>
+                <div class="fleet-img">
+                    <img src="tesla3.jpg" alt="Model X">
+                </div>
+                <div class="fleet-info">
+                    <h3>Model X</h3>
+                    <div class="price">From $99,990</div>
+                    <p>The safest, quickest and most capable sport utility vehicle ever built.</p>
+                    
+                    <div class="fleet-actions">
+                        <button class="btn" data-model="Model X">Order Now</button>
+                
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Model Y -->
+            <div class="fleet-card" data-category="suv">
+                <div class="model-badge">Compact SUV</div>
+                <div class="fleet-img">
+                    <img src="ymodel.jpg" alt="Model Y">
+                </div>
+                <div class="fleet-info">
+                    <h3>Model Y</h3>
+                    <div class="price">From $54,990</div>
+                    <p>Versatile, spacious and efficient SUV with seating for up to seven adults.</p>
+                    
+                    <div class="fleet-actions">
+                        <button class="btn" data-model="Model Y">Order Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cybertruck -->
+            <div class="fleet-card" data-category="truck">
+                <div class="model-badge">New Arrival</div>
+                <div class="fleet-img">
+                    <img src="cybertruck.jpg" alt="Cybertruck">
+                </div>
+                <div class="fleet-info">
+                    <h3>Cybertruck</h3>
+                    <div class="price">From $79,990</div>
+                    <p>Better utility than a truck with more performance than a sports car.</p>
+                    <div class="fleet-actions">
+                        <button class="btn" data-model="Cybertruck">Order Now</button>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Roadster -->
+            <div class="fleet-card" data-category="sports">
+                <div class="model-badge">Coming Soon</div>
+                <div class="fleet-img">
+                    <img src="roadstar.jpg" alt="Roadster">
+                </div>
+                <div class="fleet-info">
+                    <h3>Roadster</h3>
+                    <div class="price">From $200,000</div>
+                    <p>The quickest car in the world, with record-setting acceleration and range.</p>
+                    
+                    <div class="fleet-actions">
+                        
+                    </div>
+                </div>
+            </div>
+
+<div class="fleet-card" data-category="sedan">
+        <div class="model-badge">Premium Sedan</div>
+        <div class="fleet-img">
+            <img src="splade.jpg" alt="Model S Plaid">
+        </div>
+        <div class="fleet-info">
+            <h3>Model S Plaid</h3>
+            <div class="price">From $94,990</div>
+            <p>Insane acceleration with tri-motor power and 396 miles of range.</p>
+            <div class="fleet-actions">
+                <button class="btn" data-model="Model S Plaid">Order Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model 3 Long Range -->
+    <div class="fleet-card" data-category="sedan">
+        <div class="model-badge">Efficient Sedan</div>
+        <div class="fleet-img">
+            <img src="long range.jpg" alt="Model 3 Long Range">
+        </div>
+        <div class="fleet-info">
+            <h3>Model 3 Long Range</h3>
+            <div class="price">From $47,990</div>
+            <p>All-electric driving range and smooth handling for daily use.</p>
+            <div class="fleet-actions">
+                <button class="btn" data-model="Model 3 Long Range">Order Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model X Plaid -->
+    <div class="fleet-card" data-category="suv">
+        <div class="model-badge">Luxury SUV</div>
+        <div class="fleet-img">
+            <img src="xplade.jpg" alt="Model X Plaid">
+        </div>
+        <div class="fleet-info">
+            <h3>Model X Plaid</h3>
+            <div class="price">From $94,990</div>
+            <p>Spacious, falcon-wing doors with ludicrous speed and 340 miles of range.</p>
+            <div class="fleet-actions">
+                <button class="btn" data-model="Model X Plaid">Order Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Y Performance -->
+    <div class="fleet-card" data-category="suv">
+        <div class="model-badge">Compact SUV</div>
+        <div class="fleet-img">
+            <img src="model y perf.jpg" alt="Model Y Performance">
+        </div>
+        <div class="fleet-info">
+            <h3>Model Y Performance</h3>
+            <div class="price">From $52,990</div>
+            <p>Spacious and versatile with great speed and over 300 miles of range.</p>
+            <div class="fleet-actions">
+                <button class="btn" data-model="Model Y Performance">Order Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cybertruck Beast -->
+    <div class="fleet-card" data-category="truck">
+        <div class="model-badge">Extreme Pickup</div>
+        <div class="fleet-img">
+            <img src="cybertruckBeast.jpg" alt="Cybertruck Beast">
+        </div>
+        <div class="fleet-info">
+            <h3>Cybertruck Beast</h3>
+            <div class="price">From $99,990</div>
+            <p>Brute power, armored exterior, and futuristic utility with extreme torque.</p>
+            <div class="fleet-actions">
+                <button class="btn" data-model="Cybertruck Beast">Order Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tesla Semi -->
+    <div class="fleet-card" data-category="truck">
+        <div class="model-badge">Heavy Duty</div>
+        <div class="fleet-img">
+            <img src="semi.jpg" alt="Tesla Semi">
+        </div>
+        <div class="fleet-info">
+            <h3>Tesla Semi</h3>
+            <div class="price">From $150,000</div>
+            <p>Built for long-haul freight with zero emissions and massive torque.</p>
+            <div class="fleet-actions">
+                <button class="btn" data-model="Tesla Semi">Order Now</button>
+            </div>
+        </div>
+    </div>
+
+
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section class="order" id="order">
+        <div class="section-title">
+            <h2 style="color: black;">Order Your Tesla</h2>
+        </div>
+        <div class="order-container">
+            <div class="order-info">
+                <h3>Reserve Your Dream Car</h3>
+                <p>Secure your Tesla with a fully refundable reservation fee. Our team will contact you within 24 hours to finalize your order and delivery details.</p>
+                <p>Experience the thrill of electric driving with zero emissions and cutting-edge technology.</p>
+                <div class="benefits">
+                    <p><i class="fas fa-check-circle"></i> Free home delivery within 100 miles</p>
+                    <p><i class="fas fa-check-circle"></i> 7-day money back guarantee</p>
+                    <p><i class="fas fa-check-circle"></i> 1 year of complimentary Supercharging</p>
+                    <p><i class="fas fa-check-circle"></i> Premium customer support 24/7</p>
+                </div>
+            </div>
+            <div class="order-form">
+                <h3>Customize Your Tesla</h3>
+                <form id="order-form">
+                    <div class="form-group">
+                        <label for="model">Select Model</label>
+                        <select id="model" name="model" required>
+                            <option value="">Choose a model</option>
+                            <option value="model_s">Model S - $89,990</option>
+                            <option value="model_3">Model 3 - $42,990</option>
+                            <option value="model_x">Model X - $99,990</option>
+                            <option value="model_y">Model Y - $54,990</option>
+                            <option value="cybertruck">Cybertruck - $79,990</option>
+                            <option value="roadster">Roadster - $200,000</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="color">Exterior Color</label>
+                        <select id="color" name="color" required>
+                            <option value="">Select color</option>
+                            <option value="pearl_white">Pearl White</option>
+                            <option value="solid_black">Solid Black</option>
+                            <option value="midnight_silver">Midnight Silver</option>
+                            <option value="deep_blue">Deep Blue</option>
+                            <option value="red">Red Multi-Coat</option>
+                            <option value="cyber_grey">Cyber Grey (Cybertruck only)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="interior">Interior</label>
+                        <select id="interior" name="interior" required>
+                            <option value="">Select interior</option>
+                            <option value="black">All-Black</option>
+                            <option value="white">Black and White</option>
+                            <option value="cream">Cream</option>
+                            <option value="cyber">Cyber Interior (Cybertruck only)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wheels">Wheels</label>
+                        <select id="wheels" name="wheels" required>
+                            <option value="">Select wheels</option>
+                            <option value="aero">18" Aero Wheels</option>
+                            <option value="sport">19" Sport Wheels</option>
+                            <option value="turbine">21" Turbine Wheels</option>
+                            <option value="cyber">Cyber Wheels (Cybertruck only)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="autopilot">Autopilot</label>
+                        <select id="autopilot" name="autopilot" required>
+                            <option value="none">No Autopilot</option>
+                            <option value="basic">Basic Autopilot (+$6,000)</option>
+                            <option value="full">Full Self-Driving Capability (+$12,000)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Customer Information -->
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Delivery Address</label>
+                        <textarea id="address" name="address" required></textarea>
+                    </div>
+                    
+                    <!-- Payment Section -->
+                    <div class="payment-form">
+                        <h4>Payment Details</h4>
+                        <div class="form-group">
+                            <label for="card-holder">Card Holder Name</label>
+                            <input type="text" id="card-holder" name="card-holder" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Card Details</label>
+                            <div id="card-element"></div>
+                        </div>
+                        <button type="submit" class="btn" id="submit-order">Complete Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/1234567890" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Tesla inc</h3>
+                <p>Premium Tesla dealership committed to accelerating the world's transition to sustainable energy through exceptional customer experiences.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/TeslaNAmerpica/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.twitter.com//tesla_na/"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/teslamotors/"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Showrooms</h3>
+                <ul>
+                    <li><a href="#">New York</a></li>
+                    <li><a href="#">Los Angeles</a></li>
+                    <li><a href="#">Miami</a></li>
+                    <li><a href="#">Chicago</a></li>
+                    <li><a href="#">Dallas</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="fleet.html">Fleet</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="job.html">Work with Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 1 Tesla road,Austin,Texas 78725,USA</p>
+                <p><i class="fas fa-phone"></i> +1 (800) TES-LAIN</p>
+                <p><i class="fas fa-envelope"></i> Teslaincfoundation@outlook.com</p>
+                <p><i class="fas fa-clock"></i> Mon-Sat: 9AM - 8PM</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Tesla Inc. All rights reserved. Tesla and related marks are trademarks of Tesla, Inc.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+        
+        hamburger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+        
+        // Fleet Filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const fleetCards = document.querySelectorAll('.fleet-card');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                
+                fleetCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Order Now buttons
+        const orderBtns = document.querySelectorAll('.fleet-actions .btn');
+        orderBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.textContent === "Order Now" || this.textContent === "Reserve Now") {
+                    const model = this.dataset.model;
+                    document.getElementById('order').scrollIntoView({behavior: 'smooth'});
+                    
+                    // Set the model in the form
+                    const modelSelect = document.getElementById('model');
+                    for (let i = 0; i < modelSelect.options.length; i++) {
+                        if (modelSelect.options[i].text.includes(model)) {
+                            modelSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                    
+                    // Highlight the form
+                    document.querySelector('.order-form').style.boxShadow = '0 0 20px rgba(227, 25, 55, 0.4)';
+                    setTimeout(() => {
+                        document.querySelector('.order-form').style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+                    }, 2000);
+                }
+            });
+        });
+        
+        // Stripe Payment Integration
+        const stripe = Stripe('pk_test_51NcV7QSEWr4fV5RjG0NQv5sWbHq3cZ0iX6w6L4Y3sWvMq7Kt2Y8QdJv9rK1xXa2Z2X8sF4Qk1a5F0Z0');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        
+        cardElement.mount('#card-element');
+        
+        const orderForm = document.getElementById('order-form');
+        
+        orderForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = document.getElementById('submit-order');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            
+            const {error, paymentMethod} = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: document.getElementById('card-holder').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    address: {
+                        line1: document.getElementById('address').value
+                    }
+                }
+            });
+            
+            if (error) {
+                alert(error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Complete Order';
+            } else {
+                // In a real application, you would send paymentMethod.id to your server
+                alert('Payment successful! Your Tesla order has been placed. Our team will contact you shortly.');
+                orderForm.reset();
+                cardElement.clear();
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Complete Order';
+                
+                // Scroll to top
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 40px';
+                header.style.background = 'rgba(23, 26, 32, 0.95)';
+            } else {
+                header.style.padding = '20px 40px';
+                header.style.background = 'rgba(0, 0, 0, 0.7)';
+            }
+        });
+    </script>
+</body>
+</html>
